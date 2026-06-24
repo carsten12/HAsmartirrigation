@@ -547,6 +547,7 @@
         "action": "Handling",
         "zones": "Soner",
         "start_date": "Startdato (valgfritt)",
+        "start_time": "Starttid (valgfritt)",
         "end_date": "Sluttdato (valgfritt)",
         "offset_minutes": "Forskyvning fra soloppgang/-nedgang",
         "account_for_duration": "Start tidlig slik at vanningen er ferdig til måltidspunktet",

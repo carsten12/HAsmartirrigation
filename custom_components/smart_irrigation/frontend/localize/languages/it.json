@@ -590,6 +590,7 @@
         "action": "Azione",
         "zones": "Zone",
         "start_date": "Data di inizio (opzionale)",
+        "start_time": "Hora di inizio (opzionale)",
         "end_date": "Data di fine (opzionale)",
         "offset_minutes": "Offset dall'alba/tramonto",
         "account_for_duration": "Iniziare prima affinché l'irrigazione finisca all'orario target",

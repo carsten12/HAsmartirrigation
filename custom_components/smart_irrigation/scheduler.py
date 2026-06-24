@@ -485,10 +485,35 @@ class RecurringScheduleManager:
     async def _setup_interval_tracker(self, schedule: dict[str, Any]) -> Any:
         """Set up an interval-based schedule tracker."""
         interval_hours = schedule.get(const.SCHEDULE_CONF_INTERVAL_HOURS, 24)
+        start_time_str = schedule.get(const.SCHEDULE_CONF_START_TIME)
+        if start_time_str:
+            return await self._setup_interval_with_start(schedule, interval_hours, start_time_str)
         interval_delta = datetime.timedelta(hours=interval_hours)
 
         return async_track_time_interval(
             self.hass, lambda now: self._execute_schedule(schedule, now), interval_delta
+        )
+
+    async def _setup_interval_with_start(self, schedule, interval_hours, start_time_str):
+        hour, minute = map(int, start_time_str.split(":"))
+        now_local = dt_util.as_local(dt_util.utcnow())
+        candidate = now_local.replace(hour=hour, minute=minute, second=0, microsecond=0)
+        if candidate <= now_local:
+            candidate += datetime.timedelta(hours=interval_hours)
+        fire_utc = dt_util.as_utc(candidate)
+        def interval_callback(now, s=schedule, ih=interval_hours, st=start_time_str):
+            self._execute_schedule(s, now)
+            nxt = dt_util.utcnow() + datetime.timedelta(hours=ih)
+            def next_cb(now2, s2=s, ih2=ih, st2=st):
+                self._execute_schedule(s2, now2)
+                self.hass.loop.call_soon_threadsafe(
+                    self.hass.async_create_task,
+                    self._setup_interval_with_start(s2, ih2, st2),
+                )
+            tracker = async_track_point_in_utc_time(self.hass, next_cb, nxt)
+            self._schedule_trackers[s[const.SCHEDULE_CONF_ID]] = tracker
+
+        return async_track_point_in_utc_time(self.hass, interval_callback, fire_utc
         )
 
     async def _setup_sunrise_tracker(self, schedule: dict[str, Any]) -> Any:

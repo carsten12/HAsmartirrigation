@@ -199,6 +199,7 @@
         "action": "Action",
         "zones": "Zones",
         "start_date": "Start date (optional)",
+        "start_time": "Start time (optional)",
         "end_date": "End date (optional)",
         "offset_minutes": "Offset from sunrise/sunset",
         "account_for_duration": "Start early so irrigation finishes at trigger time",

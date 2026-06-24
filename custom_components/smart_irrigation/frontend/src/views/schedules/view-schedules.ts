@@ -371,7 +371,7 @@ class SmartIrrigationViewSchedules extends SubscribeMixin(LitElement) {
               <input
                 type="number"
                 min="1"
-                .value="${String(s.interval_hours || 24)}"
+                .value="${String(s.interval_hours || 12)}"
                 @input=${(e: Event) =>
                   this._update({
                     interval_hours: parseInt(
@@ -384,6 +384,16 @@ class SmartIrrigationViewSchedules extends SubscribeMixin(LitElement) {
               >
             </div>
           </div>
+          <div class="field">
+            <label>${localize("panels.schedules.fields.start_time", this.hass.language)}</label>
+            <input type="time"
+              .value="${(s as any).start_time || '07:00'}"
+              @change=${(e: Event) => this._update({
+                start_time: (e.target as HTMLInputElement).value || undefined
+              } as any)}
+      />
+    </div>
+
         `;
       case SCHEDULE_TYPE_SUNRISE:
       case SCHEDULE_TYPE_SUNSET:

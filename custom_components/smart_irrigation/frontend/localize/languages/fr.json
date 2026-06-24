@@ -547,6 +547,7 @@
         "action": "Action",
         "zones": "Zones",
         "start_date": "Date de début (optionnel)",
+        "start_time": "Heure de début (optionnel)",
         "end_date": "Date de fin (optionnel)",
         "offset_minutes": "Décalage par rapport au lever/coucher du soleil",
         "account_for_duration": "Démarrer tôt pour que l'irrigation se termine à l'heure cible",

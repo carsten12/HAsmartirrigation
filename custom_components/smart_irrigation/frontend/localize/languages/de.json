@@ -545,6 +545,7 @@
         "action": "Aktion",
         "zones": "Zonen",
         "start_date": "Startdatum (optional)",
+        "start_time": "Startuhrzeit (optional)",
         "end_date": "Enddatum (optional)",
         "offset_minutes": "Versatz von Sonnenaufgang/-untergang",
         "account_for_duration": "Früh starten, damit Bewässerung zur Zielzeit endet",

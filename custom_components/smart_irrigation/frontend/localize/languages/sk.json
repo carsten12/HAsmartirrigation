@@ -545,6 +545,7 @@
         "action": "Akcia",
         "zones": "Zóny",
         "start_date": "Dátum začiatku (voliteľné)",
+        "start_time": "Čas začiatku (voliteľné)",
         "end_date": "Dátum konca (voliteľné)",
         "offset_minutes": "Posun od východu/západu slnka",
         "account_for_duration": "Spustiť skoro, aby závlaha skončila v cieľovom čase",

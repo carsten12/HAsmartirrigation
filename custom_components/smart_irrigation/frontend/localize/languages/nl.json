@@ -545,6 +545,7 @@
         "action": "Actie",
         "zones": "Zones",
         "start_date": "Startdatum (optioneel)",
+        "start_time": "Begintijd (optioneel)",
         "end_date": "Einddatum (optioneel)",
         "offset_minutes": "Offset van zonsopgang/-ondergang",
         "account_for_duration": "Vroeg starten zodat bewatering eindigt op doeltijd",

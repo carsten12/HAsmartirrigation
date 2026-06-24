@@ -546,6 +546,7 @@
         "action": "Acción",
         "zones": "Zonas",
         "start_date": "Fecha de inicio (opcional)",
+        "start_time": "Hora de inicio (opcional)",
         "end_date": "Fecha de fin (opcional)",
         "offset_minutes": "Desplazamiento desde amanecer/atardecer",
         "account_for_duration": "Iniciar antes para que el riego termine a la hora objetivo",
