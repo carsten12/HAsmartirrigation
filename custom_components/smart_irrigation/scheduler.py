@@ -332,19 +332,17 @@ class RecurringScheduleManager:
                 interval_hours = schedule.get(const.SCHEDULE_CONF_INTERVAL_HOURS, 12)
                 entry["interval_hours"] = interval_hours
                 
+                # Calculate future target for interval schedules with a fixed start time.
+                # Without this, the frontend receives next_run_utc=None and shows "manual".
+                
                 start_time_str = schedule.get(const.SCHEDULE_CONF_START_TIME)
                 if not start_time_str:
-                    # Altes Verhalten: Intervall ohne Startzeitpunkt
                     runs.append(entry)
-                    continue
-                
-                # Neues Verhalten: Intervall MIT Startzeitpunkt berechnen
+                    
                 hour, minute = map(int, start_time_str.split(":"))
                 now_local = dt_util.as_local(dt_util.utcnow())
                 candidate = now_local.replace(hour=hour, minute=minute, second=0, microsecond=0)
-                
-                # Wenn die Startzeit für heute schon vorbei ist, addiere Intervalle,
-                # bis wir in der Zukunft landen
+
                 while candidate <= now_local:
                     candidate += datetime.timedelta(hours=interval_hours)
                 
