@@ -500,6 +500,11 @@
         "minutes": "min",
         "help": "Zavlažovať túto zónu po vlastný čas, bez ohľadu na výpočet",
         "toast_started": "Spustené zavlažovanie"
+      },
+      "stop_zone": {
+        "stop": "Zastaviť",
+        "watering": "Zavlažuje…",
+        "toast_stopped": "Beh zastavený"
       }
     },
     "schedules": {
@@ -772,6 +777,7 @@
     "save_button": "Uložiť nastavenia počasia",
     "saved": "Nastavenia počasia uložené",
     "openmeteo": "Open-Meteo (zdarma, bez kľúča)",
+    "met": "Met Office (Spojené kráľovstvo)",
     "test_button": "Otestovať pripojenie",
     "test_button_testing": "Testuje sa…",
     "test_success": "✓ Pripojenie úspešné",

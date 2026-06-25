@@ -502,6 +502,11 @@
         "minutes": "min",
         "help": "Arroser cette zone pendant une durée personnalisée, sans tenir compte du calcul",
         "toast_started": "Arrosage lancé"
+      },
+      "stop_zone": {
+        "stop": "Arrêter",
+        "watering": "Arrosage…",
+        "toast_stopped": "Arrosage arrêté"
       }
     },
     "schedules": {
@@ -774,6 +779,7 @@
     "save_button": "Enregistrer les paramètres météo",
     "saved": "Paramètres météo enregistrés",
     "openmeteo": "Open-Meteo (gratuit, sans clé)",
+    "met": "Met Office (Royaume-Uni)",
     "test_button": "Tester la connexion",
     "test_button_testing": "Test en cours…",
     "test_success": "✓ Connexion réussie",

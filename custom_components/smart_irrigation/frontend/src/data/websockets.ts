@@ -247,11 +247,16 @@ export const runZone = (
 ): Promise<any> =>
   hass.callWS({ type: DOMAIN + "/run_zone", zone_id, duration });
 
+/** Stop an in-progress run for a zone immediately (turns the valve off). */
+export const stopZone = (hass: HomeAssistant, zone_id: string): Promise<any> =>
+  hass.callWS({ type: DOMAIN + "/stop_zone", zone_id });
+
 export interface WeatherConfig {
   use_weather_service: boolean;
   weather_service: string | null;
   has_owm_api_key: boolean;
   has_pw_api_key: boolean;
+  has_met_api_key: boolean;
   available_services: string[];
   no_api_key_services: string[];
 }

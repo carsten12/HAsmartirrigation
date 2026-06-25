@@ -258,10 +258,42 @@ class ServiceHandlersMixin:
             state = self.hass.states.get(entity)
             if not state:
                 raise SmartIrrigationError(f"No state found for entity {entity}")
+            # The main zone sensor exposes the zone id as "id"; the per-zone
+            # button / binary_sensor entities expose it as "zone_id". Accept
+            # either so any of a zone's entities can be used as the target.
             zone_id = state.attributes.get(const.ZONE_ID)
             if zone_id is None:
-                raise SmartIrrigationError("No zone_id found in state attributes.")
+                zone_id = state.attributes.get("zone_id")
+            if zone_id is None:
+                raise SmartIrrigationError(
+                    f"Entity {entity} is not a Smart Irrigation zone entity "
+                    "(no zone id in its attributes)."
+                )
             await self.async_run_zone(zone_id, float(duration))
+
+    async def handle_stop_zone(self, call):
+        """Stop an in-progress run for a zone (and turn its valve off)."""
+        if const.SERVICE_ENTITY_ID not in call.data:
+            return
+        eid = call.data[const.SERVICE_ENTITY_ID]
+        if not isinstance(eid, list):
+            eid = [eid]
+        for entity in eid:
+            _LOGGER.info("Stop zone service called for %s", entity)
+            state = self.hass.states.get(entity)
+            if not state:
+                raise SmartIrrigationError(f"No state found for entity {entity}")
+            # Accept either the main zone sensor ("id") or a per-zone
+            # button / binary_sensor ("zone_id"), like run_zone.
+            zone_id = state.attributes.get(const.ZONE_ID)
+            if zone_id is None:
+                zone_id = state.attributes.get("zone_id")
+            if zone_id is None:
+                raise SmartIrrigationError(
+                    f"Entity {entity} is not a Smart Irrigation zone entity "
+                    "(no zone id in its attributes)."
+                )
+            await self.async_stop_zone(zone_id)
 
     # Enhanced Scheduling Service Handlers
     async def handle_create_recurring_schedule(self, call):
@@ -388,6 +420,9 @@ def async_register_services(hass: HomeAssistant):
     )
     hass.services.async_register(
         const.DOMAIN, const.SERVICE_RUN_ZONE, coordinator.handle_run_zone
+    )
+    hass.services.async_register(
+        const.DOMAIN, const.SERVICE_STOP_ZONE, coordinator.handle_stop_zone
     )
 
     # Enhanced scheduling services

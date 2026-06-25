@@ -5,7 +5,7 @@ class SmartIrrigationError(Exception):
     """Exception raised for errors in the Smart Irrigation integration."""
 
 
-VERSION = "v2026.06.38"
+VERSION = "v2026.06.41"
 NAME = "Smart Irrigation"
 MANUFACTURER = "@JustChr"
 
@@ -144,6 +144,7 @@ CONF_WEATHER_SERVICE_API_KEY = (
 )
 CONF_OWM_API_KEY = "owm_api_key"
 CONF_PW_API_KEY = "pw_api_key"
+CONF_MET_API_KEY = "met_api_key"
 CONF_WEATHER_SERVICE_API_VERSION = "weather_service_api_version"
 CONF_INSTANCE_NAME = "name"
 
@@ -158,10 +159,12 @@ CONF_DEFAULT_MANUAL_COORDINATES_ENABLED = False
 CONF_WEATHER_SERVICE_OWM = "Open Weather Map"
 CONF_WEATHER_SERVICE_PW = "Pirate Weather"
 CONF_WEATHER_SERVICE_OPENMETEO = "Open-Meteo"
+CONF_WEATHER_SERVICE_MET = "Met Office"
 CONF_WEATHER_SERVICES = [
     CONF_WEATHER_SERVICE_OPENMETEO,
     CONF_WEATHER_SERVICE_OWM,
     CONF_WEATHER_SERVICE_PW,
+    CONF_WEATHER_SERVICE_MET,
 ]
 # Services that do not require an API key
 CONF_WEATHER_SERVICES_NO_API_KEY = [CONF_WEATHER_SERVICE_OPENMETEO]
@@ -497,6 +500,9 @@ SERVICE_DELETE_RECURRING_SCHEDULE = "delete_recurring_schedule"
 SERVICE_SET_RAIN_DELAY = "set_rain_delay"
 SERVICE_CLEAR_RAIN_DELAY = "clear_rain_delay"
 SERVICE_RUN_ZONE = "run_zone"
+SERVICE_STOP_ZONE = "stop_zone"
+# Run-log detail marker for a run a user stopped early.
+RUN_DETAIL_STOPPED = "stopped"
 # run_zone / set_rain_delay call params
 ATTR_DURATION_MINUTES = "duration"  # whole minutes for a custom manual run
 ATTR_RAIN_DELAY_UNTIL = "until"  # ISO datetime to hold until

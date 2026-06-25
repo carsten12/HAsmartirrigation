@@ -501,6 +501,11 @@
         "minutes": "min",
         "help": "Riega esta zona durante un tiempo personalizado, sin tener en cuenta el cálculo",
         "toast_started": "Riego iniciado"
+      },
+      "stop_zone": {
+        "stop": "Detener",
+        "watering": "Regando…",
+        "toast_stopped": "Riego detenido"
       }
     },
     "schedules": {
@@ -773,6 +778,7 @@
     "save_button": "Guardar ajustes meteorológicos",
     "saved": "Ajustes meteorológicos guardados",
     "openmeteo": "Open-Meteo (gratis, sin clave)",
+    "met": "Met Office (Reino Unido)",
     "test_button": "Probar conexión",
     "test_button_testing": "Probando…",
     "test_success": "✓ Conexión correcta",

@@ -545,6 +545,11 @@
         "minutes": "min",
         "help": "Irriga questa zona per un tempo personalizzato, ignorando il calcolo",
         "toast_started": "Irrigazione avviata"
+      },
+      "stop_zone": {
+        "stop": "Ferma",
+        "watering": "Irrigazione…",
+        "toast_stopped": "Irrigazione fermata"
       }
     },
     "schedules": {
@@ -777,6 +782,7 @@
     "save_button": "Salva impostazioni meteo",
     "saved": "Impostazioni meteo salvate",
     "openmeteo": "Open-Meteo (gratuito, senza chiave)",
+    "met": "Met Office (Regno Unito)",
     "test_button": "Prova connessione",
     "test_button_testing": "Test in corso…",
     "test_success": "✓ Connessione riuscita",

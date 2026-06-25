@@ -59,6 +59,7 @@ from .services import ServiceHandlersMixin, async_register_services
 from .skip_conditions import SkipConditionsMixin
 from .store import SmartIrrigationStorage, async_get_registry
 from .watering_calendar import WateringCalendarMixin
+from .weathermodules.MetOfficeClient import MetOfficeClient
 from .weathermodules.OpenMeteoClient import OpenMeteoClient
 from .weathermodules.OWMClient import OWMClient
 from .weathermodules.PirateWeatherClient import PirateWeatherClient
@@ -370,6 +371,16 @@ class SmartIrrigationCoordinator(
                 self._WeatherServiceClient = PirateWeatherClient(
                     api_key=pw_key,
                     api_version="1",
+                    latitude=effective_lat,
+                    longitude=effective_lon,
+                    elevation=effective_elev,
+                )
+            elif self.weather_service == const.CONF_WEATHER_SERVICE_MET:
+                met_key = hass.data[const.DOMAIN].get(
+                    const.CONF_MET_API_KEY
+                ) or hass.data[const.DOMAIN].get(const.CONF_WEATHER_SERVICE_API_KEY)
+                self._WeatherServiceClient = MetOfficeClient(
+                    api_key=met_key,
                     latitude=effective_lat,
                     longitude=effective_lon,
                     elevation=effective_elev,
@@ -1310,10 +1321,30 @@ class SmartIrrigationCoordinator(
         # Cancel the experimental observed-watering valve subscription.
         self.async_teardown_observed_watering()
 
-        # Clear in-memory zones dict only; the entity platform manages entity
-        # state on unload. Registry entries are preserved so user customizations
-        # (friendly names, areas) survive disable/re-enable cycles (issue #506).
-        self.hass.data[const.DOMAIN]["zones"].clear()
+        # Clear the in-memory per-zone entity trackers; the entity platform
+        # manages entity state on unload. Registry entries are preserved so user
+        # customizations (friendly names, areas) survive disable/re-enable cycles
+        # (issue #506) — clearing these dicts only drops the live object refs.
+        #
+        # ALL trackers must be cleared, not just "zones": on a reload the replay
+        # (`_register_entity`) re-adds a platform's entities only if it doesn't
+        # think they already exist. The sensor platform keys that check on the
+        # "zones" dict, so clearing only "zones" let sensors re-add while the
+        # binary_sensor / button platforms (which dedup on their own tracker
+        # dict) skipped the re-add — leaving those per-zone entities orphaned and
+        # "unavailable" after every reload (issue #36).
+        data = self.hass.data[const.DOMAIN]
+        for key in (
+            "zones",
+            "bucket_sensors",
+            "multiplier_numbers",
+            "zone_extra_sensors",
+            "zone_binary_sensors",
+            "zone_buttons",
+        ):
+            tracker = data.get(key)
+            if isinstance(tracker, dict):
+                tracker.clear()
 
         # remove subscriptions for coordinator
         while self._subscriptions:
